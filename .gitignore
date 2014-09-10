@@ -1,36 +1,27 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+pkg/
 
-# Folder config file
-Desktop.ini
+# Berkshelf
+.vagrant
+/cookbooks
+Berksfile.lock
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Bundler
+Gemfile.lock
+bin/*
+.bundle/*
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+.kitchen/
+.kitchen.local.yml
 
-# =========================
-# Operating System Files
-# =========================
+# IDEs
+*.iml
+.idea
 
-# OSX
-# =========================
-
+# OS
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must ends with two \r.
-Icon
-
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes

@@ -1,0 +1,8 @@
+{
+  "name": "camunda-kvm-cookbook",
+  "description": "camunda-kvm-cookbook",
+
+  "run_list": [
+    "recipe[camunda-kvm-cookbook::default]"
+  ]
+}

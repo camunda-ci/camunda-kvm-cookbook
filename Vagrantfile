@@ -65,8 +65,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     myvm.vm.network :private_network, type: "dhcp"
 
     myvm.vm.provider :virtualbox do |vb|
-      vb.memory = 2048
-      vb.cpus = 2
+      vb.gui = false
+      vb.memory = 4048
+      vb.cpus = 4
+	  vb.customize ["modifyvm", :id, "--nic3", "bridged", "--bridgeadapter3", "Intel(R) 82579LM Gigabit Network Connection"]
     end
   end
 

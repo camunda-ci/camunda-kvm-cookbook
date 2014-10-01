@@ -17,4 +17,5 @@
 # limitations under the License.
 #
 
-include_recipe 'camunda-kvm-cookbook::kvm'
+include_recipe 'camunda-kvm-cookbook::net'
+

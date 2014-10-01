@@ -1,3 +1,4 @@
+#
 # Cookbook Name:: camunda-cookbook-template
 # Recipe:: default
 #
@@ -16,16 +17,22 @@
 # limitations under the License.
 #
 
-default['kvm']['host']['packages'] 			= %w(qemu-kvm libvirt-bin mc virtinst)
-default['kvm']['user'] 						= 'vagrant'
-default['kvm']['images_dir']				= '/home/vagrant/images/'
+def win_friendly_path(path)
+   path.gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR) if path
+end
 
-default['kvm']['vms']['name']				= %w(mssql12)
+config_net = win_friendly_path(File.join(Chef::Config[:file_cache_path], "net.tmp"))
 
-default['kvm']['vms']['mssql12']['vcpu']	= '1'
-default['kvm']['vms']['mssql12']['ram']		= '1024'
-default['kvm']['vms']['mssql12']['arch']	= 'x86_64'
-default['kvm']['vms']['mssql12']['mac']		= '52:54:00:63:27:cb'
-default['kvm']['vms']['mssql12']['os_type']	= 'windows'
-default['kvm']['vms']['mssql12']['file']	= 'packer-windows2012.qcow2'
-default['kvm']['vms']['mssql12']['format']	= 'qcow2'
+template config_net do
+  source "net.tmp.temp"
+end
+
+execute "Conf_Network" do
+  command "cat #{config_net} > /etc/network/interfaces"
+end
+
+execute "Reboot" do
+  command "reboot"
+end
+
+include_recipe 'camunda-kvm-cookbook::kvm'

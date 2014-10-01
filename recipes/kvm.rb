@@ -28,14 +28,21 @@ execute "add_to_group" do
 end
 
 execute "mount" do
-  command "mkdir /home/smb && mkdir /home/vagrant/images && mount -t cifs -o user=camunda,pass=ruessel //192.168.178.244/share/Vagrant-Box-stuff/packer-windows/output-windows2012 /home/smb"
+  command "if [ ! -d \"/home/smb\" ]; then mkdir /home/smb; fi; if [ ! -d \"/home/vagrant/images\" ]; then mkdir /home/vagrant/images; fi; mount -t cifs -o user=camunda,pass=ruessel //192.168.178.244/share/Vagrant-Box-stuff/qemu /home/smb;"
+end
+
+config_qemu = win_friendly_path(File.join(Chef::Config[:file_cache_path], "qemu.xml"))
+
+template config_qemu do
+  source "qemu.xml.temp"
 end
 
 node['kvm']['vms']['name'].each do |name|
 	execute "copy" do
-	  command "cp /home/smb/#{node['kvm']['vms'][name]['file']} /home/vagrant/images/"
+	  command "if [ ! -f #{node['kvm']['images_dir'] + node['kvm']['vms'][name]['file']} ]; then cp /home/smb/#{node['kvm']['vms'][name]['file']} #{node['kvm']['images_dir']}; fi;"
 	end
 	execute name do
-	  command "virt-install --connect qemu:///system --r #{node['kvm']['vms'][name]['ram']} -n #{name} --os-type=#{node['kvm']['vms'][name]['os_type']} --disk path=/home/vagrant/images/#{node['kvm']['vms'][name]['file']},device=disk,bus=virtio,format=#{node['kvm']['vms'][name]['format']} --vcpus=#{node['kvm']['vms'][name]['vcpu']} --bridge=vnet0 --noautoconsole --import"
+#	  command "virt-install --connect qemu:///system --ram #{node['kvm']['vms'][name]['ram']} -n #{name} --os-type=#{node['kvm']['vms'][name]['os_type']} --disk path=#{node['kvm']['images_dir'] + node['kvm']['vms'][name]['file']},device=disk,bus=virtio,format=#{node['kvm']['vms'][name]['format']} --vcpus=#{node['kvm']['vms'][name]['vcpu']} --noautoconsole --import"
+      command "virsh create #{config_qemu}"
 	end
 end

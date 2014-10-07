@@ -31,7 +31,7 @@ execute "mount" do
   command "if [ ! -d \"/home/smb\" ]; then mkdir /home/smb; fi; if [ ! -d \"/home/vagrant/images\" ]; then mkdir /home/vagrant/images; fi; mount -t cifs -o user=camunda,pass=ruessel //192.168.178.244/share/Vagrant-Box-stuff/qemu /home/smb;"
 end
 
-config_qemu = win_friendly_path(File.join(Chef::Config[:file_cache_path], "qemu.xml"))
+config_qemu = File.join(Chef::Config[:file_cache_path], "qemu.xml")
 
 template config_qemu do
   source "qemu.xml.temp"

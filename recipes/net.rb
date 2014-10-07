@@ -17,11 +17,7 @@
 # limitations under the License.
 #
 
-def win_friendly_path(path)
-   path.gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR) if path
-end
-
-config_net = win_friendly_path(File.join(Chef::Config[:file_cache_path], "net.tmp"))
+config_net = File.join(Chef::Config[:file_cache_path], "net.tmp")
 
 template config_net do
   source "net.tmp.temp"
@@ -32,7 +28,8 @@ execute "Conf_Network" do
 end
 
 execute "Reboot" do
-  command "reboot"
+#  command "reboot"
+  command "/etc/init.d/network restart"
 end
 
 include_recipe 'camunda-kvm-cookbook::kvm'

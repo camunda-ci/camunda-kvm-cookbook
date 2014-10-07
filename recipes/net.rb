@@ -29,7 +29,7 @@ end
 
 execute "Reboot" do
 #  command "reboot"
-  command "/etc/init.d/network restart"
+  command "/etc/init.d/networking restart"
 end
 
 include_recipe 'camunda-kvm-cookbook::kvm'

@@ -16,9 +16,9 @@
 # limitations under the License.
 #
 
-default['kvm']['host']['packages'] 			= %w(qemu-kvm libvirt-bin mc virtinst)
-default['kvm']['user'] 						= 'vagrant'
-default['kvm']['images_dir']				= '/home/vagrant/images/'
+default['kvm']['host']['packages'] 			= %w(qemu-kvm libvirt-bin virtinst)
+default['kvm']['user'] 						= 'camunda'
+default['kvm']['images_dir']				= '/home/camunda/images/'
 
 default['kvm']['vms']['name']				= %w(mssql12)
 

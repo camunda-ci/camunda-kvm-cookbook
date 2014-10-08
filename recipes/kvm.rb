@@ -28,7 +28,7 @@ execute "add_to_group" do
 end
 
 execute "mount" do
-  command "if [ ! -d \"/home/smb\" ]; then mkdir /home/smb; fi; if [ ! -d \"/home/vagrant/images\" ]; then mkdir /home/vagrant/images; fi; mount -t cifs -o user=camunda,pass=ruessel //192.168.178.244/share/Vagrant-Box-stuff/qemu /home/smb;"
+  command "if [ ! -d \"/home/smb\" ]; then mkdir /home/smb; fi; if [ ! -d \"#{node['kvm']['images_dir']}\" ]; then mkdir #{node['kvm']['images_dir']}; fi; mount -t cifs -o user=camunda,pass=ruessel //192.168.178.244/share/Vagrant-Box-stuff/qemu /home/smb;"
 end
 
 config_qemu = File.join(Chef::Config[:file_cache_path], "qemu.xml")

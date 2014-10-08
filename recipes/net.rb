@@ -27,9 +27,9 @@ execute "Conf_Network" do
   command "cat #{config_net} > /etc/network/interfaces"
 end
 
-execute "Reboot" do
+#execute "Reboot" do
 #  command "reboot"
-  command "/etc/init.d/networking restart"
-end
+#  command "/etc/init.d/networking restart"
+#end
 
 include_recipe 'camunda-kvm-cookbook::kvm'

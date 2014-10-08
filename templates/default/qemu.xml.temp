@@ -1,10 +1,10 @@
 <domain type='kvm'>
-  <name><%=name %></name>
-  <memory unit='MiB'><%=node['kvm']['vms'][name]['ram']	%></memory>
-  <currentMemory unit='MiB'><%=node['kvm']['vms'][name]['ram']	%></currentMemory>
-  <vcpu placement='static'><%=node['kvm']['vms'][name]['vcpu'] %></vcpu>
+  <name>mssql12</name>
+  <memory unit='MiB'><%=node['kvm']['vms']['mssql12']['ram']	%></memory>
+  <currentMemory unit='MiB'><%=node['kvm']['vms']['mssql12']['ram']	%></currentMemory>
+  <vcpu placement='static'><%=node['kvm']['vms']['mssql12']['vcpu'] %></vcpu>
   <os>
-    <type arch='<%=node['kvm']['vms'][name]['arch'] %>' machine='pc-i440fx-trusty'>hvm</type>
+    <type arch='<%=node['kvm']['vms']['mssql12']['arch'] %>' machine='pc-i440fx-trusty'>hvm</type>
     <boot dev='hd'/>
   </os>
   <features>
@@ -20,7 +20,7 @@
     <emulator>/usr/bin/kvm-spice</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='<%=node['kvm']['images_dir'] + node['kvm']['vms'][name]['file'] %>'/>
+      <source file='<%=node['kvm']['images_dir'] + node['kvm']['vms']['mssql12']['file'] %>'/>
       <target dev='hda' bus='ide'/>
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
@@ -32,7 +32,7 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
     </controller>
     <interface type='bridge'>
-      <mac address='<%=['kvm']['vms'][name]['mac'] %>'/>
+      <mac address='<%=node['kvm']['vms']['mssql12']['mac'] %>'/>
       <source bridge='br0'/>
       <model type='rtl8139'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>

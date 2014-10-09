@@ -46,3 +46,11 @@ node['kvm']['vms']['name'].each do |name|
       command "virsh create #{config_qemu}"
 	end
 end
+
+execute "DNAT_22" do
+  command "iptables -t nat -A PREROUTING -p tcp --dport 2222 -j DNAT --to-destination 192.168.178.124:22"
+end
+
+execute "DNAT_1433" do
+  command "iptables -t nat -A PREROUTING -p tcp --dport 1433 -j DNAT --to-destination 192.168.178.124:1433"
+end
